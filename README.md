@@ -6,6 +6,8 @@ Dont use `npm`
 ### How To
 
 ```
+git clone https://github.com/shekhardesigner/cors-remote-content
+cd cors-remote-content
 yarn install
 yarn start
 ```
