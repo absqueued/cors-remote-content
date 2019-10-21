@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Remote content in modal</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="display-3">Remote Content Loading</h1>
+      <hr />
+
+      <!-- Button trigger modal -->
+      <button
+        id="btnShowModal"
+        type="button"
+        class="btn btn-primary"
+      >
+        Launch demo modal
+      </button>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="contentModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="contentModalTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="contentModalTitle">Refund Information</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div id="remoteContentsWrap">
+                  <pre id="remoteContentsWrapPre"></pre>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+      $(function(){
+          function loadRemoteContent(college, url) {
+            $.getJSON('http://api.allorigins.win/get?url=' + url + '&callback=?', function (data) {
+                var htmlString = data.contents;
+                var html = document.createElement('html');
+                var frag = document.createDocumentFragment();
+                
+                html.innerHTML = htmlString;
+                frag.appendChild(html);
+
+                if (college === 'i') {
+                    var bodyText = frag.firstChild.getElementsByTagName('section')[0].innerHTML;
+                }
+
+                if (college === 's') {
+                    var bodyText = frag.firstChild.getElementsByTagName('article')[0].innerHTML;
+                }
+                
+                $('#remoteContentsWrap').html(bodyText);
+            });
+        }
+
+          $('#btnShowModal').on('click', function () {
+            $('#contentModal').modal('show')
+
+            $('#remoteContentsWrap').text('Loading ... ');
+
+            // loadRemoteContent('i', 'https://bursars.ivc.edu/refund-request-information');
+            loadRemoteContent('s', 'https://www.saddleback.edu/spo/refund-information');
+          })
+      });
+    </script>
+  </body>
+</html>

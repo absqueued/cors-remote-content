@@ -1,0 +1,18 @@
+{
+  "name": "@shekhardesigner/remote-content-modal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server -p 8081",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Shekhar K. Sharma <itsmes.sh@gmail.com> (http://www.shekhardesigner.com)",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "http-server": "^0.11.1",
+    "jquery": "^3.4.1"
+  }
+}
